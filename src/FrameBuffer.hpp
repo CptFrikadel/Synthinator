@@ -6,6 +6,7 @@
 #ifndef FRAMEBUFFER_HPP
 #define FRAMEBUFFER_HPP
 
+#include <array>
 #include <cstdint>
 
 class FrameBuffer {
@@ -13,10 +14,11 @@ class FrameBuffer {
 public:
 
     FrameBuffer();
-	FrameBuffer(const FrameBuffer& old);
+
+    FrameBuffer(const FrameBuffer& old) = default;
+
     ~FrameBuffer();
-    float * get() {return buffer;};
-	float * get() const {return buffer;};
+    float * get() { return buffer.data(); };
 
     static const std::size_t frame_size = 512;
     static const std::size_t num_channels = 1;
@@ -27,12 +29,12 @@ public:
     FrameBuffer& operator*=(float val);
     const FrameBuffer operator*(float val);
 
-    const float& operator[](const std::size_t index) const {return buffer[index];};
-    float& operator[](const std::size_t index){return buffer[index];};
+    const float& operator[](const std::size_t index) const { return buffer[index]; };
+    float& operator[](const std::size_t index){ return buffer[index]; };
 
 
 private:
-    float * buffer;
+    std::array<float, frame_size * num_channels> buffer;
 
 };
 
