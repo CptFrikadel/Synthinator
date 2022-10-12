@@ -22,25 +22,23 @@ Note::Note(const float _analog_freq, const unsigned int _sample_freq) :
 
     norm_freq = normalize(_analog_freq);
     // Add the base oscillator
-    std::shared_ptr<Oscillator> osc1(new Oscillator(norm_freq, WaveType::WAVE_SINE));
-    oscillators.emplace_back(osc1);
+    auto osc1 = std::make_shared<Oscillator>(norm_freq, WaveType::WAVE_SINE);
+    oscillators.push_back(osc1);
 
     // Add some harmonics for shits n giggles
-	std::shared_ptr<Oscillator> osc2(new Oscillator(norm_freq / 2, WaveType::WAVE_SINE));
-	oscillators.emplace_back(osc2);
-    //oscillators.emplace_back(new Oscillator(norm_freq / 4, WaveType::WAVE_SINE));
-	std::shared_ptr<Oscillator> osc3(new Oscillator(norm_freq / 4, WaveType::WAVE_SINE));
-	oscillators.emplace_back(osc3);
-    //oscillators.emplace_back(new Oscillator(norm_freq / 8, WaveType::WAVE_SINE));
-	std::shared_ptr<Oscillator> osc4(new Oscillator(norm_freq / 8, WaveType::WAVE_SINE));
-	oscillators.emplace_back(osc4);
-    //oscillators.emplace_back(new Oscillator(norm_freq * 2, WaveType::WAVE_SINE));
-    //oscillators.emplace_back(norm_freq * 4, WaveType::WAVE_SINE);
+    auto osc2 = std::make_shared<Oscillator>(norm_freq / 2, WaveType::WAVE_SINE);
+    oscillators.push_back(osc2);
+
+    auto osc3 = std::make_shared<Oscillator>(norm_freq / 4, WaveType::WAVE_SINE);
+    oscillators.push_back(osc3);
+
+    auto osc4 = std::make_shared<Oscillator>(norm_freq / 8, WaveType::WAVE_SINE);
+    oscillators.push_back(osc4);
+
     /*
         Initialize the base envelope and place at first position in chain
     */
-
-    base_envelope = new EnvelopeFilter(5000, 500, 0.95, 6000);
+    base_envelope = std::make_unique<EnvelopeFilter>(5000, 500, 0.95, 6000);
 
 }
 
