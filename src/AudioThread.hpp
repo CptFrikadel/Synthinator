@@ -1,5 +1,5 @@
 #ifndef _AUDIO_THREAD_HPP
-#define _INPUT_THREAD_HPP
+#define _AUDIO_THREAD_HPP
 
 #include <alsa/asoundlib.h>
 #include <thread>

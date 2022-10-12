@@ -13,7 +13,7 @@ As of now, the device can only populate six key events at the same time.
 The other devices get events when more than six keys are held..
 
 */
-const char * Keyboard::keyboard_device = "/dev/input/by-id/usb-Logitech_G413_Carbon_Mechanical_Gaming_Keyboard_196C37623332-event-kbd";
+const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
 
 Keyboard::Keyboard(EventQueue * _queue): queue(_queue){
 

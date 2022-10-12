@@ -4,7 +4,7 @@
 AudioThread::AudioThread(EventQueue * _event_queue): event_queue(_event_queue){
 
 
-    if (snd_pcm_open(&pcm_handle, "plughw:1,0", SND_PCM_STREAM_PLAYBACK, 0) < 0){
+    if (snd_pcm_open(&pcm_handle, "default", SND_PCM_STREAM_PLAYBACK, 0) < 0){
 
         std::cerr << "Error opening soud device yo!" << std::endl;
         exit(-1);
