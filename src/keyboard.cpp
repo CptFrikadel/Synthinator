@@ -13,9 +13,9 @@ As of now, the device can only populate six key events at the same time.
 The other devices get events when more than six keys are held..
 
 */
-const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
+//const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
 
-Keyboard::Keyboard(EventQueue * _queue): queue(_queue){
+Keyboard::Keyboard(const std::string& devicePath, EventQueue * _queue): queue(_queue){
 
     active = false;
 
@@ -23,7 +23,7 @@ Keyboard::Keyboard(EventQueue * _queue): queue(_queue){
     keyboard_st = new keyboard_state();
 
     keyboard_fd = 0;
-    keyboard_fd = open(keyboard_device, O_RDONLY);
+    keyboard_fd = open(devicePath.c_str(), O_RDONLY);
 
     if (keyboard_fd > 0){
 

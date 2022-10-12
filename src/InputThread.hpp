@@ -23,7 +23,7 @@ typedef struct {
 class InputThread{
 
 public:
-    InputThread(EventQueue * _input_queue);
+    InputThread(const std::string& keyboardDevicePath, EventQueue * _input_queue);
     ~InputThread();
     EventQueue * input_events;
 

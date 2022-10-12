@@ -28,7 +28,7 @@ class Keyboard {
 
 public:
 
-    Keyboard(EventQueue * _queue);
+    Keyboard(const std::string& devicePath, EventQueue * _queue);
     ~Keyboard();
     short getKeyState(short key);
     void keyboardLoop();
@@ -41,10 +41,6 @@ private:
     bool active;
     char name[256];
     EventQueue * queue;
-
-    static const char * keyboard_device ;
-
-
 
 };
 
