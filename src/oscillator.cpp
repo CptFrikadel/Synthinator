@@ -16,13 +16,13 @@ Oscillator::Oscillator(const float _norm_freq, WaveType _type):
 
   switch (type){
     case WaveType::WAVE_SINE:
-      waveform = new SineWave(norm_freq);
+      waveform = std::make_shared<SineWave>(norm_freq);
       break;
     case WaveType::WAVE_SQUARE:
-      waveform = new SquareWave(norm_freq);
+      waveform = std::make_shared<SquareWave>(norm_freq);
       break;
   default:
-      waveform = new SineWave(norm_freq);
+      waveform = std::make_shared<SineWave>(norm_freq);
       break;
 
   }
@@ -30,13 +30,11 @@ Oscillator::Oscillator(const float _norm_freq, WaveType _type):
 
 }
 
-Oscillator::~Oscillator(){
-
-    delete waveform;
+Oscillator::~Oscillator()
+{
 }
 
-FrameBuffer& Oscillator::oscillate(){
-
+FrameBuffer& Oscillator::oscillate()
+{
   return waveform->generate();
-
 }

@@ -9,6 +9,7 @@
 #define _OSCILLATOR_HPP
 
 #include <cstdlib>
+#include <memory>
 #include "waveform.hpp"
 #include "FrameBuffer.hpp"
 
@@ -22,7 +23,7 @@ public:
   Oscillator(const float norm_freq, WaveType _type);
   ~Oscillator();
 
-  Waveform * waveform;    // Waveform gen
+  std::shared_ptr<Waveform> waveform;    // Waveform gen
   float norm_freq;        // Normalized frequency (cycles / sample)
 
   FrameBuffer& oscillate();       // Do oscillate callback thingy
