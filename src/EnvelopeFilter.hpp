@@ -38,11 +38,15 @@ public:
 
 
     FrameBuffer& doFilterings(FrameBuffer& buffer) override;
-    State envelope_phase = ATTACK;
+
+    void FinishOff();
+    bool IsFinished() { return envelope_phase == FINISHED; }
 
 private:
+    State envelope_phase = ATTACK;
     ADSR adsr;
     int phase = 0;
+    bool finish = false;
 
 };
 

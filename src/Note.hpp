@@ -38,7 +38,6 @@ public:
     unsigned int sample_freq;
     WaveType base_type = WaveType::WAVE_SINE;
     std::unique_ptr<EnvelopeFilter> base_envelope;
-    State envelope_phase;
 
     bool note_active = true; // false when note is finished ringing out
 

@@ -47,7 +47,7 @@ FrameBuffer& Note::synthesize(){
 
 
 
-    if (base_envelope->envelope_phase != FINISHED){
+    if (!base_envelope->IsFinished()){
 
         // Oscillate and sum all harmonics
         for (auto osc = oscillators.begin(); osc != oscillators.end(); ++osc){
@@ -73,9 +73,7 @@ FrameBuffer& Note::synthesize(){
 void Note::signalOff(){
 
     // Signal the base envelope to release
-    base_envelope->envelope_phase = RELEASE;
-    envelope_phase = RELEASE;
-
+    base_envelope->FinishOff();
 
 }
 

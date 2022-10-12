@@ -1,5 +1,10 @@
 #include "EnvelopeFilter.hpp"
-//#include <iostream>
+
+
+void EnvelopeFilter::FinishOff()
+{
+    finish = true;
+}
 
 FrameBuffer& EnvelopeFilter::doFilterings(FrameBuffer& buffer){
 
@@ -11,23 +16,31 @@ FrameBuffer& EnvelopeFilter::doFilterings(FrameBuffer& buffer){
         case(ATTACK):
 
             y = (1 / (float) adsr.attack) * phase;
-            //std::cerr << "A @ " << phase << " : " << y << std::endl;
-            if (phase >= adsr.attack) {envelope_phase = DECAY; phase = 0;}
+
+            if (phase >= adsr.attack)
+            {
+                envelope_phase = DECAY;
+                phase = 0;
+            }
+
             break;
 
         case(DECAY):
 
             y = -((1 - adsr.sustain)  / (float) adsr.decay) * phase + 1;
-            //y = 1;
-            //std::cerr << "D @ " << phase << " : " << y << std::endl;
-            if (phase > adsr.decay) envelope_phase = SUSTAIN;
+
+            if (phase > adsr.decay)
+                envelope_phase = SUSTAIN;
             break;
 
         case(SUSTAIN):
 
             phase = 0;
-            // std::cerr << "S" << std::endl;
             y = adsr.sustain;
+
+            if (finish)
+                envelope_phase = RELEASE;
+
             break;
 
         case(RELEASE):
@@ -36,7 +49,6 @@ FrameBuffer& EnvelopeFilter::doFilterings(FrameBuffer& buffer){
                 y = 0;
                 envelope_phase = FINISHED;
             }
-            //std::cerr << "Release " << y << std::endl;
             break;
         case(FINISHED):
             y = 0;
