@@ -19,7 +19,7 @@ public:
     EventQueue * event_queue;
 
 private:
-    static const unsigned int sample_freq = 48000;
+    const unsigned int sample_freq = 48000;
     std::thread playback_loop;
 
     snd_pcm_t *pcm_handle;

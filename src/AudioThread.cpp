@@ -88,7 +88,7 @@ int AudioThread::onPlayback(){
 
             } else if (event_queue->queue.front().type == NOTE_ON && event_queue->queue.front().freq != 0) {
                 // NOTE_ON create new oscillator and add to playing notes
-                std::shared_ptr<Note> note(new Note(event_queue->queue.front().freq, sample_freq));
+                auto note = std::make_shared<Note>(event_queue->queue.front().freq, sample_freq);
                 playing.push_back(note);
                 std::cerr << "NOTE ON " << event_queue->queue.front().freq << std::endl;
             }
