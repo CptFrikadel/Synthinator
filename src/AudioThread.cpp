@@ -80,7 +80,7 @@ int AudioThread::onPlayback(){
 
                     if (it->analog_freq == event_queue->queue.front().freq){
 
-                        std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
+                        //std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
                         it->signalOff();
 
                     }
@@ -90,7 +90,7 @@ int AudioThread::onPlayback(){
                 // NOTE_ON create new oscillator and add to playing notes
                 auto note = std::make_shared<Note>(event_queue->queue.front().freq, sample_freq);
                 playing.push_back(note);
-                std::cerr << "NOTE ON " << event_queue->queue.front().freq << std::endl;
+                //std::cerr << "NOTE ON " << event_queue->queue.front().freq << std::endl;
             }
 
             event_queue->queue_mutex.lock();
@@ -114,6 +114,8 @@ int AudioThread::onPlayback(){
             }
 		}
 
+        std::cerr << "\r\e[K" << std::flush;
+
 		// oscillate all running oscillators
         for (auto note = playing.begin(); note < playing.end(); note++){
 
@@ -122,7 +124,6 @@ int AudioThread::onPlayback(){
 
             buffer += ((*note)->synthesize() * 0.15);
         }
-    std::cerr << std::endl;
     }
 
 
