@@ -43,29 +43,27 @@ Note::Note(const float _analog_freq, const unsigned int _sample_freq) :
 }
 
 
-FrameBuffer& Note::synthesize(){
-
-
-
-    if (!base_envelope->IsFinished()){
-
-        // Oscillate and sum all harmonics
-        for (auto osc = oscillators.begin(); osc != oscillators.end(); ++osc){
-
-            buffer += (*osc)->oscillate() *  (1 /(float) oscillators.size());
-
-        }
-
-        // Run filters on final buffer
-        for (auto filter: filter_chain){
-            filter->doFilterings(buffer);
-        }
-
-        // Finally run base envelope
-        base_envelope->doFilterings(buffer);
-    } else {
+FrameBuffer& Note::synthesize()
+{
+    if (base_envelope->IsFinished())
+    {
         note_active = false;
+        return buffer *= 0;
     }
+
+    // Oscillate and sum all harmonics
+    for (auto osc = oscillators.begin(); osc != oscillators.end(); ++osc){
+
+        buffer += (*osc)->oscillate() *  (1 /(float) oscillators.size());
+    }
+
+    // Run filters on final buffer
+    for (auto filter: filter_chain){
+        filter->doFilterings(buffer);
+    }
+
+    // Finally run base envelope
+    base_envelope->doFilterings(buffer);
 
     return buffer;
 }
