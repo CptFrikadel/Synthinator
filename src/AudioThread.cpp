@@ -105,24 +105,24 @@ int AudioThread::onPlayback(){
 
     if (!playing.empty()){
 
-	
-		// Erase inactive notes from playing vector before synthesizing
-		for (auto note = playing.begin(); note < playing.end(); note++){
+
+        // Erase inactive notes from playing vector before synthesizing
+        for (auto note = playing.begin(); note < playing.end(); note++){
 
             if (!(*note)->isActive()){
                 note = playing.erase(note);
             }
-		}
+        }
 
         std::cerr << "\r\e[K" << std::flush;
 
 		// oscillate all running oscillators
-        for (auto note = playing.begin(); note < playing.end(); note++){
+        for (auto note : playing){
 
             // Print currently playing freqs
-            std::cerr << (*note)->analog_freq << "\t";
+            std::cerr << note->analog_freq << "\t";
 
-            buffer += ((*note)->synthesize() * 0.15);
+            buffer += (note->synthesize() * 0.15);
         }
     }
 
