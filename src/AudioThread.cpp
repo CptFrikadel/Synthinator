@@ -1,8 +1,9 @@
 #include "AudioThread.hpp"
 
 
-AudioThread::AudioThread(EventQueue * _event_queue): event_queue(_event_queue){
-
+AudioThread::AudioThread(std::shared_ptr<EventQueue> eventQueue)
+    : event_queue(eventQueue)
+{
 
     if (snd_pcm_open(&pcm_handle, "default", SND_PCM_STREAM_PLAYBACK, 0) < 0){
 

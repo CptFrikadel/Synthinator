@@ -13,10 +13,10 @@
 class AudioThread
 {
 public:
-    AudioThread(EventQueue * _event_queue);
+    AudioThread(std::shared_ptr<EventQueue> event_queue);
     ~AudioThread();
 
-    EventQueue * event_queue;
+    std::shared_ptr<EventQueue> event_queue;
 
 private:
     const unsigned int sample_freq = 48000;

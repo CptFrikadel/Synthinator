@@ -1,4 +1,3 @@
-
 #include "keyboard.hpp"
 #include "Notes.hpp"
 
@@ -15,8 +14,9 @@ The other devices get events when more than six keys are held..
 */
 //const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
 
-Keyboard::Keyboard(const std::string& devicePath, EventQueue * _queue): queue(_queue){
-
+Keyboard::Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue> eventQueue) 
+    : queue(eventQueue)
+{
     active = false;
 
     keyboard_ev = new input_event();

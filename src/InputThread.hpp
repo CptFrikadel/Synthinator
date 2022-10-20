@@ -9,6 +9,7 @@
 
 #include "keyboard.hpp"
 #include "EventQueue.hpp"
+#include <memory>
 
 
 typedef struct {
@@ -23,14 +24,15 @@ typedef struct {
 class InputThread{
 
 public:
-    InputThread(const std::string& keyboardDevicePath, EventQueue * _input_queue);
+    InputThread(const std::string& keyboardDevicePath, std::shared_ptr<EventQueue> input_queue);
     ~InputThread();
-    EventQueue * input_events;
+
+    std::shared_ptr<EventQueue> input_events;
 
 
 private:
     bool active;
-    Keyboard * kbd; // Pointer to keyboard device
+    std::shared_ptr<Keyboard> kbd; // Pointer to keyboard device
 
 
 

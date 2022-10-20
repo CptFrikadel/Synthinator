@@ -23,10 +23,10 @@ int main (int argc, char *argv[]){
 
     std::string keyboard_device = argv[1];
 
-    EventQueue event_queue;
+    auto event_queue = std::make_shared<EventQueue>();
 
-    InputThread input_thread(keyboard_device, &event_queue);
-    AudioThread audio_thread(&event_queue);
+    InputThread input_thread(keyboard_device, event_queue);
+    AudioThread audio_thread(event_queue);
 
     return 0;
 }

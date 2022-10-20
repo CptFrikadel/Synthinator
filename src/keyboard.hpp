@@ -12,6 +12,7 @@
 #define _KEYBOARD_HPP
 
 #include <linux/input.h>
+#include <memory>
 #include <thread>
 #include <fcntl.h>
 #include <iostream>
@@ -28,7 +29,7 @@ class Keyboard {
 
 public:
 
-    Keyboard(const std::string& devicePath, EventQueue * _queue);
+    Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue> queue);
     ~Keyboard();
     short getKeyState(short key);
     void keyboardLoop();
@@ -40,7 +41,8 @@ private:
     std::thread loop;
     bool active;
     char name[256];
-    EventQueue * queue;
+
+    std::shared_ptr<EventQueue> queue;
 
 };
 
