@@ -27,14 +27,11 @@ public:
     InputThread(const std::string& keyboardDevicePath, std::shared_ptr<EventQueue> input_queue);
     ~InputThread();
 
-    std::shared_ptr<EventQueue> input_events;
-
+    std::shared_ptr<EventQueue> mInputEvents;
 
 private:
-    bool active;
-    std::shared_ptr<Keyboard> kbd; // Pointer to keyboard device
-
-
+    bool mActive;
+    std::shared_ptr<Keyboard> mKeyboard; // Pointer to keyboard device
 
 };
 
