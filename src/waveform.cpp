@@ -28,10 +28,17 @@ FrameBuffer& SineWave::generate(){
 
 FrameBuffer& SquareWave::generate(){
 
-    for (std::size_t i = 0; i < FrameBuffer::frame_size; i++)
+    std::size_t n;
+    for (n = 0; n < FrameBuffer::frame_size; n++)
     {
-        buffer[i] = 0;
+        float sample = std::sin(3.14151598 * 2 * norm_freq * n + phase);
+        if (sample >= 0 )
+            buffer[n] = 0.707; // same RMS value as a sine wave
+        else
+            buffer[n] = -0.707;
     }
+
+    phase = 3.141598 * 2 *norm_freq * n + phase;
 
     return buffer;
 }

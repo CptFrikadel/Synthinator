@@ -22,12 +22,12 @@ Note::Note(const float _analog_freq, const unsigned int _sample_freq) :
 
     norm_freq = normalize(_analog_freq);
     // Add the base oscillator
-    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq, WaveType::WAVE_SINE));
+    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq, WaveType::WAVE_SQUARE));
 
-    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 2, WaveType::WAVE_SINE));
-    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 4, WaveType::WAVE_SINE));
-    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 2, WaveType::WAVE_SINE));
-    oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 4, WaveType::WAVE_SINE));
+    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 2, WaveType::WAVE_SINE));
+    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 4, WaveType::WAVE_SINE));
+    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 2, WaveType::WAVE_SINE));
+    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 4, WaveType::WAVE_SINE));
 
     /*
         Initialize the base envelope and place at first position in chain
