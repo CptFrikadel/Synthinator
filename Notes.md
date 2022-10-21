@@ -24,6 +24,12 @@
 
 # Notes:
 
+- Should probably change the waveform generators to a lookup table instead.
+    - Either generate the table for the given frequency at construction
+        - Means no easy frequency modulation
+    - Or generate big master table per waveform type and sample that based of normalized frequency.
+        - Generate sample table for a single period
+        - buffer sample then is pulled from the master table based of the current phase
 
 
 
