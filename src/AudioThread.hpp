@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 
-//#include "oscillator.hpp"
 #include "EventQueue.hpp"
 #include "Note.hpp"
 
@@ -29,8 +28,6 @@ private:
 
     FrameBuffer buffer;
     std::vector<std::shared_ptr<Note>> playing;
-
-
 
 };
 
