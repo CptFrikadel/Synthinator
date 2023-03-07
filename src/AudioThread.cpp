@@ -66,40 +66,48 @@ void AudioThread::makeSound(){
 
 }
 
+void AudioThread::handleEvents()
+{
+    auto& events = event_queue->StartConsuming();
+
+    if (events.empty())
+    {
+        event_queue->DoneConsuming();
+        return;
+    }
+
+
+    for (auto& event : events)
+    {
+        // check what event it was
+        if (event.type == NOTE_OFF && event.freq != 0)
+        {
+            // NOTE_OFF so remove from vector of playing notes
+            for (auto it: playing)
+            {
+                if (it->analog_freq == event.freq)
+                {
+                    //std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
+                    it->signalOff();
+                }
+            }
+        } 
+        else if (event.type == NOTE_ON && event.freq != 0) 
+        {
+            // NOTE_ON create new oscillator and add to playing notes
+            auto note = std::make_shared<Note>(event.freq, sample_freq);
+            playing.push_back(note);
+            //std::cerr << "NOTE ON " << event.freq << std::endl;
+        }
+    }
+
+    event_queue->DoneConsuming();
+}
+
 
 int AudioThread::onPlayback(){
 
-    // Handle all events
-    // NOTE: this might get flooded with events and never exit.
-    while (!event_queue->queue.empty()){
-
-            // check what event it was
-            if (event_queue->queue.front().type == NOTE_OFF && event_queue->queue.front().freq != 0){
-
-                // NOTE_OFF so remove from vector of playing notes
-                for (auto it: playing){
-
-                    if (it->analog_freq == event_queue->queue.front().freq){
-
-                        //std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
-                        it->signalOff();
-
-                    }
-                }
-
-            } else if (event_queue->queue.front().type == NOTE_ON && event_queue->queue.front().freq != 0) {
-                // NOTE_ON create new oscillator and add to playing notes
-                auto note = std::make_shared<Note>(event_queue->queue.front().freq, sample_freq);
-                playing.push_back(note);
-                //std::cerr << "NOTE ON " << event_queue->queue.front().freq << std::endl;
-            }
-
-            event_queue->queue_mutex.lock();
-            event_queue->queue.pop();
-            event_queue->queue_mutex.unlock();
-
-
-    }
+    handleEvents();
 
     // Reset buffer
     buffer *= 0;
@@ -128,8 +136,5 @@ int AudioThread::onPlayback(){
     }
 
 
-
     return snd_pcm_writei(pcm_handle, buffer.get(), FrameBuffer::frame_size);
-
-
 }

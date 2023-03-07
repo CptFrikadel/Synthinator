@@ -25,6 +25,7 @@ private:
 
     int onPlayback();
     void makeSound();
+    void handleEvents();
 
     FrameBuffer buffer;
     std::vector<std::shared_ptr<Note>> playing;

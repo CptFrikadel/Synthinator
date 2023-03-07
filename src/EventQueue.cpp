@@ -1,14 +1,31 @@
 #include "EventQueue.hpp"
-#include <iostream>
+#include <cassert>
+#include <mutex>
+#include <vector>
 
 
-void EventQueue::append(float freq, Event_type type){
-
+void EventQueue::append(float freq, Event_type type)
+{
     Event event = {type, freq, 1};
 
-    queue_mutex.lock();
-    queue.push(event);
-    queue_mutex.unlock();
+    forAppending.push_back(event);
+}
 
+
+std::vector<Event>& EventQueue::StartConsuming()
+{
+    consumerLock.lock();
+
+    forConsuming.swap(forAppending);
+
+    return forConsuming;
+}
+
+
+void EventQueue::DoneConsuming()
+{
+    forConsuming.clear();
+
+    consumerLock.unlock();
 
 }

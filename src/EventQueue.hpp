@@ -11,7 +11,6 @@
 
 #include <vector>
 #include <mutex>
-#include <queue>
 
 enum Event_type{
         NOTE_OFF,
@@ -29,9 +28,18 @@ typedef struct {
 class EventQueue {
 
 public:
+
     void append(float freq, Event_type type);
-    std::queue<Event> queue;
-    std::mutex queue_mutex;
+
+    std::vector<Event>& StartConsuming();
+    void DoneConsuming();
+
+private:
+
+    std::vector<Event> forConsuming;
+    std::vector<Event> forAppending;
+
+    std::mutex consumerLock;
 
 };
 
