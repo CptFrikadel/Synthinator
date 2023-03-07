@@ -3,7 +3,7 @@ CXX := g++
 
 EXE := synth
 
-CFLAGS := -Wall -Wextra -g
+CFLAGS := -std=c++20 -Wall -Wextra -g
 
 SRC_DIR := src
 OBJ_DIR := bin
