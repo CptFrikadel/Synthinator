@@ -32,23 +32,23 @@ public:
     float getAnalogFreq(){return analog_freq;}
     bool isActive(){return note_active;}
 
+
+private:
+    // Some datastrucure holding the filter chain
+    std::vector<Filter> filter_chain;
+    std::vector<Oscillator> oscillators;
+
+    void normalize();
+    float normalize(const float freq);
+
     FrameBuffer buffer;
     float norm_freq;
     float analog_freq;
     unsigned int sample_freq;
     WaveType base_type = WaveType::WAVE_SINE;
-    std::unique_ptr<EnvelopeFilter> base_envelope;
+    EnvelopeFilter base_envelope;
 
     bool note_active = true; // false when note is finished ringing out
-
-private:
-    // Some datastrucure holding the filter chain
-    std::vector<Filter *> filter_chain;
-    std::vector<std::shared_ptr<Oscillator>> oscillators;
-
-    void normalize();
-    float normalize(const float freq);
-
 };
 
 #endif

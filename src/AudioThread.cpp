@@ -86,7 +86,7 @@ void AudioThread::handleEvents()
             // NOTE_OFF so remove from vector of playing notes
             for (auto& it: playing)
             {
-                if (it.analog_freq == event.freq)
+                if (it.getAnalogFreq() == event.freq)
                 {
                     //std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
                     it.signalOff();
@@ -129,7 +129,7 @@ int AudioThread::onPlayback(){
         for (auto& note : playing){
 
             // Print currently playing freqs
-            std::cerr << note.analog_freq << "\t";
+            std::cerr << note.getAnalogFreq() << "\t";
 
             buffer += (note.synthesize() * 0.15);
         }
