@@ -39,6 +39,7 @@ private:
     std::vector<Event> forConsuming;
     std::vector<Event> forAppending;
 
+    std::mutex appendingLock;
     std::mutex consumerLock;
 
 };
