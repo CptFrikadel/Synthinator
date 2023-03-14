@@ -28,7 +28,7 @@ private:
     void handleEvents();
 
     FrameBuffer buffer;
-    std::vector<std::shared_ptr<Note>> playing;
+    std::vector<Note> playing;
     std::shared_ptr<EventQueue<NoteEvent>> event_queue;
 
 };

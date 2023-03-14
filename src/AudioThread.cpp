@@ -84,20 +84,19 @@ void AudioThread::handleEvents()
         if (event.type == NoteEvent::NOTE_OFF && event.freq != 0)
         {
             // NOTE_OFF so remove from vector of playing notes
-            for (auto it: playing)
+            for (auto& it: playing)
             {
-                if (it->analog_freq == event.freq)
+                if (it.analog_freq == event.freq)
                 {
                     //std::cerr << "NOTE OFF " << it->analog_freq << std::endl;
-                    it->signalOff();
+                    it.signalOff();
                 }
             }
         } 
         else if (event.type == NoteEvent::NOTE_ON && event.freq != 0) 
         {
             // NOTE_ON create new oscillator and add to playing notes
-            auto note = std::make_shared<Note>(event.freq, sample_freq);
-            playing.push_back(note);
+            playing.emplace_back(event.freq, sample_freq);
             //std::cerr << "NOTE ON " << event.freq << std::endl;
         }
     }
@@ -119,7 +118,7 @@ int AudioThread::onPlayback(){
         // Erase inactive notes from playing vector before synthesizing
         for (auto note = playing.begin(); note < playing.end(); note++){
 
-            if (!(*note)->isActive()){
+            if (!note->isActive()){
                 note = playing.erase(note);
             }
         }
@@ -127,12 +126,12 @@ int AudioThread::onPlayback(){
         std::cerr << "\r\e[K" << std::flush;
 
 		// oscillate all running oscillators
-        for (auto note : playing){
+        for (auto& note : playing){
 
             // Print currently playing freqs
-            std::cerr << note->analog_freq << "\t";
+            std::cerr << note.analog_freq << "\t";
 
-            buffer += (note->synthesize() * 0.15);
+            buffer += (note.synthesize() * 0.15);
         }
     }
 
