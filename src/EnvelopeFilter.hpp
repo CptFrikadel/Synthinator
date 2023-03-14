@@ -36,6 +36,10 @@ public:
     EnvelopeFilter(const int _attack, const int _decay, const float _sustain, const int _release)
         : adsr({_attack, _decay, _sustain, _release}){};
 
+    EnvelopeFilter(ADSR _adsr) 
+        : adsr(_adsr)
+    {}
+
 
     FrameBuffer& doFilterings(FrameBuffer& buffer) override;
 

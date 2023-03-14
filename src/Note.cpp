@@ -1,6 +1,7 @@
 #include "Note.hpp"
 #include "EnvelopeFilter.hpp"
 #include "Filter.hpp"
+#include "waveform.hpp"
 #include <iostream>
 
 void Note::normalize(){
@@ -15,20 +16,12 @@ float Note::normalize(const float freq){
 
 }
 
-Note::Note(const float _analog_freq, const unsigned int _sample_freq) :
+Note::Note(const float _analog_freq, const unsigned int _sample_freq, ADSR adsr) :
+    norm_freq(normalize(_analog_freq)),
     analog_freq(_analog_freq),
     sample_freq(_sample_freq),
-    base_envelope(5000, 1000, 0.95, 6000)
+    base_envelope(adsr)
 {
-
-    norm_freq = normalize(_analog_freq);
-    // Add the base oscillator
-    oscillators.emplace_back(norm_freq, WaveType::WAVE_SQUARE);
-
-    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 2, WaveType::WAVE_SINE));
-    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq / 4, WaveType::WAVE_SINE));
-    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 2, WaveType::WAVE_SINE));
-    //oscillators.emplace_back(std::make_shared<Oscillator>(norm_freq * 4, WaveType::WAVE_SINE));
 }
 
 
@@ -66,11 +59,11 @@ void Note::signalOff(){
 
 }
 
-void Note::addHarmonic(const float freq){
-
-    oscillators.emplace_back(normalize(freq), WaveType::WAVE_SINE);
-
+void Note::addHarmonic(const float analogFreq, WaveType type)
+{
+    oscillators.emplace_back(normalize(analogFreq), type);
 }
+
 
 void Note::addFilter(){
 

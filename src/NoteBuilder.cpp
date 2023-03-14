@@ -9,9 +9,9 @@ NoteBuilder& NoteBuilder::setBaseEnvelope(ADSRms adsr)
 }
 
 
-NoteBuilder& NoteBuilder::addHarmonic(float freq, WaveType type)
+NoteBuilder& NoteBuilder::addHarmonic(float freqMultiplier, WaveType type)
 {
-    harmonics.emplace_back(freq, type);
+    harmonics.emplace_back(freqMultiplier, type);
 
     return *this;
 }
@@ -30,7 +30,7 @@ Note NoteBuilder::Build(float baseFreq)
 
     for (auto& harmonic : harmonics)
     {
-        note.addHarmonic(harmonic.frequency, harmonic.type);
+        note.addHarmonic(baseFreq * harmonic.frequencyMultiplier, harmonic.type);
     }
 
     return note;

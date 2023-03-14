@@ -1,9 +1,11 @@
 #include "AudioThread.hpp"
 #include "EventTypes.hpp"
+#include "NoteBuilder.hpp"
 
 
 AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
     : event_queue(eventQueue)
+    , noteBuilder(sample_freq)
 {
 
     if (snd_pcm_open(&pcm_handle, "default", SND_PCM_STREAM_PLAYBACK, 0) < 0){
@@ -27,6 +29,8 @@ AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
 
     playback_loop = std::thread(&AudioThread::makeSound, this);
 
+    // TODO move test..
+    noteBuilder.addHarmonic(1, WaveType::WAVE_SINE).setBaseEnvelope({10, 10, 0.8, 20});
 }
 
 AudioThread::~AudioThread(){
@@ -96,7 +100,7 @@ void AudioThread::handleEvents()
         else if (event.type == NoteEvent::NOTE_ON && event.freq != 0) 
         {
             // NOTE_ON create new oscillator and add to playing notes
-            playing.emplace_back(event.freq, sample_freq);
+            playing.push_back(noteBuilder.Build(event.freq));
             //std::cerr << "NOTE ON " << event.freq << std::endl;
         }
     }

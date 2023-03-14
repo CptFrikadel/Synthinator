@@ -19,16 +19,20 @@
 #include "Filter.hpp"
 #include "EnvelopeFilter.hpp"
 #include "FrameBuffer.hpp"
+#include "waveform.hpp"
 
 class Note {
 
 public:
-    Note(const float _analog_freq, const unsigned int _sample_freq);
+    Note(const float _analog_freq, const unsigned int _sample_freq, ADSR adsr);
 
     FrameBuffer& synthesize();
     void signalOff();
-    void addHarmonic(const float _analog_freq);
+    void addHarmonic(const float analogFreq, WaveType type);
     void addFilter();
+
+    void setBaseEnvelope(int attacksamples, int decaysamples, float sustainlevel, int releasesamples);
+
     float getAnalogFreq(){return analog_freq;}
     bool isActive(){return note_active;}
 
@@ -45,7 +49,6 @@ private:
     float norm_freq;
     float analog_freq;
     unsigned int sample_freq;
-    WaveType base_type = WaveType::WAVE_SINE;
     EnvelopeFilter base_envelope;
 
     bool note_active = true; // false when note is finished ringing out

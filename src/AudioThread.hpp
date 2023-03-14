@@ -9,6 +9,7 @@
 #include "EventQueue.hpp"
 #include "EventTypes.hpp"
 #include "Note.hpp"
+#include "NoteBuilder.hpp"
 
 class AudioThread
 {
@@ -31,6 +32,7 @@ private:
     std::vector<Note> playing;
     std::shared_ptr<EventQueue<NoteEvent>> event_queue;
 
+    NoteBuilder noteBuilder;
 };
 
 
