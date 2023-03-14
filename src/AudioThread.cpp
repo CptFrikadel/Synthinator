@@ -1,7 +1,8 @@
 #include "AudioThread.hpp"
+#include "EventTypes.hpp"
 
 
-AudioThread::AudioThread(std::shared_ptr<EventQueue> eventQueue)
+AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
     : event_queue(eventQueue)
 {
 
@@ -80,7 +81,7 @@ void AudioThread::handleEvents()
     for (auto& event : events)
     {
         // check what event it was
-        if (event.type == NOTE_OFF && event.freq != 0)
+        if (event.type == NoteEvent::NOTE_OFF && event.freq != 0)
         {
             // NOTE_OFF so remove from vector of playing notes
             for (auto it: playing)
@@ -92,7 +93,7 @@ void AudioThread::handleEvents()
                 }
             }
         } 
-        else if (event.type == NOTE_ON && event.freq != 0) 
+        else if (event.type == NoteEvent::NOTE_ON && event.freq != 0) 
         {
             // NOTE_ON create new oscillator and add to playing notes
             auto note = std::make_shared<Note>(event.freq, sample_freq);

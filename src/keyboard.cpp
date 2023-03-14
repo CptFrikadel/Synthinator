@@ -1,4 +1,5 @@
 #include "keyboard.hpp"
+#include "EventTypes.hpp"
 #include "Notes.hpp"
 
 
@@ -14,7 +15,7 @@ The other devices get events when more than six keys are held..
 */
 //const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
 
-Keyboard::Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue> eventQueue) 
+Keyboard::Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> eventQueue) 
     : queue(eventQueue)
 {
     active = false;
@@ -90,15 +91,16 @@ void Keyboard::keyboardLoop(){
 
                     keyboard_st->keys[keyboard_ev->code] = keyboard_ev->value;
 
-                    float freq = getNote(keyboard_ev->code);
-                    Event_type type;
+                    NoteEvent event;
+
+                    event.freq = getNote(keyboard_ev->code);
 
                     switch(keyboard_ev->value){
-                    case 0: type = NOTE_OFF; break;
-                    case 1: type = NOTE_ON; break;
+                        case 0: event.type = NoteEvent::NOTE_OFF; break;
+                        case 1: event.type = NoteEvent::NOTE_ON; break;
                     }
 
-                    queue->append(freq, type);
+                    queue->append(event);
                 }
             }
 

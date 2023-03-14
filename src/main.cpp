@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "EventTypes.hpp"
 #include "InputThread.hpp"
 #include "EventQueue.hpp"
 #include "AudioThread.hpp"
@@ -23,7 +24,7 @@ int main (int argc, char *argv[]){
 
     std::string keyboard_device = argv[1];
 
-    auto event_queue = std::make_shared<EventQueue>();
+    auto event_queue = std::make_shared<EventQueue<NoteEvent>>();
 
     InputThread input_thread(keyboard_device, event_queue);
     AudioThread audio_thread(event_queue);

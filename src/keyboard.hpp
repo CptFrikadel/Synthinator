@@ -19,6 +19,7 @@
 #include <unistd.h>
 
 #include "EventQueue.hpp"
+#include "EventTypes.hpp"
 
 struct keyboard_state {
 
@@ -29,7 +30,7 @@ class Keyboard {
 
 public:
 
-    Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue> queue);
+    Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> queue);
     ~Keyboard();
     short getKeyState(short key);
     void keyboardLoop();
@@ -42,7 +43,7 @@ private:
     bool active;
     char name[256];
 
-    std::shared_ptr<EventQueue> queue;
+    std::shared_ptr<EventQueue<NoteEvent>> queue;
 
 };
 
