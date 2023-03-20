@@ -59,9 +59,9 @@ void Note::signalOff(){
 
 }
 
-void Note::addHarmonic(const float analogFreq, WaveType type)
+void Note::addHarmonic(const float analogFreq, float amplitude, WaveType type, float phase)
 {
-    oscillators.emplace_back(normalize(analogFreq), type);
+    oscillators.emplace_back(normalize(analogFreq), amplitude, phase, type);
 }
 
 

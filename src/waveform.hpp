@@ -15,23 +15,23 @@ enum class WaveType {
 class Waveform {
 
 public:
-  Waveform(float _freq);
+  Waveform(float _freq, float _amplitude, float _phase = 0);
   virtual ~Waveform() = default;
   virtual FrameBuffer& generate() = 0;
   FrameBuffer buffer;
 
 protected:
   float norm_freq;
-  float phase = 0;
+  float amplitude;
+  float phase;
 
 };
 
 class SquareWave : public Waveform{
 
 public:
-  SquareWave(float _freq): Waveform(_freq){}
+  SquareWave(float _freq, float _amplitude, float phase = 0): Waveform(_freq, _amplitude, phase){}
   FrameBuffer& generate() override;
-
 
 };
 
@@ -39,7 +39,7 @@ public:
 class SineWave : public Waveform{
 
 public:
-  SineWave(float _freq): Waveform(_freq){}
+  SineWave(float _freq, float _amplitude, float phase = 0): Waveform(_freq, _amplitude, phase){}
   FrameBuffer& generate() override;
 };
 

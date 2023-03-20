@@ -28,7 +28,7 @@ public:
 
     FrameBuffer& synthesize();
     void signalOff();
-    void addHarmonic(const float analogFreq, WaveType type);
+    void addHarmonic(const float analogFreq, float amplitude, WaveType type, float phase = 0);
     void addFilter();
 
     void setBaseEnvelope(int attacksamples, int decaysamples, float sustainlevel, int releasesamples);

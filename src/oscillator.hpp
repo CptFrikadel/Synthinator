@@ -19,27 +19,23 @@ class Oscillator {
 
 public:
 
-  Oscillator(const float norm_freq);
-  Oscillator(const float norm_freq, WaveType _type);
-  ~Oscillator();
-
-  std::shared_ptr<Waveform> waveform;    // Waveform gen
-  float norm_freq;        // Normalized frequency (cycles / sample)
+  Oscillator(const float norm_freq, float amplitude, float phase, WaveType _type);
+  ~Oscillator() = default;
 
   FrameBuffer& oscillate();       // Do oscillate callback thingy
 
-public:
-  void setType(WaveType _type){ type = _type;}
   WaveType getType(){return type;}
 
 private:
+  float norm_freq;        // Normalized frequency (cycles / sample)
+  float amplitude;
+  float phase;
   WaveType type;        // WaveType
 
-private:
+  std::shared_ptr<Waveform> waveform;    // Waveform gen
+
   void normalize();     // Calculate normalized freq
 
-
 };
-
 
 #endif

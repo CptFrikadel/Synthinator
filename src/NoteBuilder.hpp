@@ -14,6 +14,8 @@ public:
     struct Harmonic
     {
         float frequencyMultiplier;
+        float volumeDb;
+        float phaseOffsetRadians;
         WaveType type;
     };
 
@@ -31,7 +33,7 @@ public:
     {}
 
 
-    NoteBuilder& addHarmonic(float freqMultiplier, WaveType type);
+    NoteBuilder& addHarmonic(float freqMultiplier, float volumeDb, float phaseOffsetRadians, WaveType type);
     NoteBuilder& setBaseEnvelope(ADSRms adsr);
 
     Note Build(float baseFreq);
