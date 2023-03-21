@@ -5,6 +5,7 @@
 #include "InputThread.hpp"
 #include "EventQueue.hpp"
 #include "AudioThread.hpp"
+#include "UIThread.hpp"
 
 
 int main (int argc, char *argv[]){
@@ -31,7 +32,13 @@ int main (int argc, char *argv[]){
     InputThread input_thread(keyboard_device, event_queue, ui_queue);
     AudioThread audio_thread(event_queue);
 
+    UIThread uiThread(ui_queue);
 
+    uiThread.Start();
+
+    std::cerr << "UIthread exited" << std::endl;
+
+    audio_thread.Stop();
 
     return 0;
 }

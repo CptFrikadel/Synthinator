@@ -2,6 +2,7 @@
 #define _AUDIO_THREAD_HPP
 
 #include <alsa/asoundlib.h>
+#include <atomic>
 #include <thread>
 #include <iostream>
 #include <vector>
@@ -17,10 +18,13 @@ public:
     AudioThread(std::shared_ptr<EventQueue<NoteEvent>> event_queue);
     ~AudioThread();
 
+    void Stop(){ mActive = false; }
 
 private:
     const unsigned int sample_freq = 48000;
     std::thread playback_loop;
+
+    std::atomic<bool> mActive;
 
     snd_pcm_t *pcm_handle;
 

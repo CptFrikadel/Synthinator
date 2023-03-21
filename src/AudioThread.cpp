@@ -27,6 +27,7 @@ AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
         exit(-1);
     }
 
+    mActive = true;
     playback_loop = std::thread(&AudioThread::makeSound, this);
 
     // TODO move test..
@@ -62,6 +63,12 @@ void AudioThread::makeSound(){
     std::cerr << "Buffer size: " << FrameBuffer::frame_size << std::endl;
 
     while(1){
+
+        if (!mActive)
+        {
+            std::cerr << "Stopping audio" << std::endl;
+            break;
+        }
 
         if (poll(pfds, nfds, 1000) > 0){
             if (pfds->revents > 0){
