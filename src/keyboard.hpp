@@ -30,7 +30,7 @@ class Keyboard {
 
 public:
 
-    Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> queue);
+    Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> queue, std::shared_ptr<EventQueue<UIEvent>> uiEventQueue);
     ~Keyboard();
     short getKeyState(short key);
     void keyboardLoop();
@@ -43,7 +43,8 @@ private:
     bool active;
     char name[256];
 
-    std::shared_ptr<EventQueue<NoteEvent>> queue;
+    std::shared_ptr<EventQueue<NoteEvent>> mNoteEventQueue;
+    std::shared_ptr<EventQueue<UIEvent>> mUIqueue;
 
 };
 

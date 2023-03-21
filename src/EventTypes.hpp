@@ -13,3 +13,14 @@ struct NoteEvent
     float freq;
     int velocity;
 };
+
+
+struct UIEvent
+{
+    enum Event_type
+    {
+        QUIT
+    };
+
+    Event_type type;
+};

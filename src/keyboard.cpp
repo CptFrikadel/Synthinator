@@ -1,6 +1,8 @@
 #include "keyboard.hpp"
+#include "EventQueue.hpp"
 #include "EventTypes.hpp"
 #include "Notes.hpp"
+#include <linux/input-event-codes.h>
 
 
 /*
@@ -15,8 +17,9 @@ The other devices get events when more than six keys are held..
 */
 //const char * Keyboard::keyboard_device = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
 
-Keyboard::Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> eventQueue) 
-    : queue(eventQueue)
+Keyboard::Keyboard(const std::string& devicePath, std::shared_ptr<EventQueue<NoteEvent>> eventQueue, std::shared_ptr<EventQueue<UIEvent>> uiEventQueue)
+    : mNoteEventQueue(eventQueue)
+    , mUIqueue(uiEventQueue)
 {
     active = false;
 
@@ -91,16 +94,34 @@ void Keyboard::keyboardLoop(){
 
                     keyboard_st->keys[keyboard_ev->code] = keyboard_ev->value;
 
-                    NoteEvent event;
+                    switch(keyboard_ev->code)
+                    {
+                    case KEY_Q:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
 
-                    event.freq = getNote(keyboard_ev->code);
+                        UIEvent event;
 
-                    switch(keyboard_ev->value){
-                        case 0: event.type = NoteEvent::NOTE_OFF; break;
-                        case 1: event.type = NoteEvent::NOTE_ON; break;
+                        event.type = UIEvent::QUIT;
+
+                        mUIqueue->append(event);
                     }
+                    default:
+                    {
 
-                    queue->append(event);
+                        NoteEvent event;
+
+                        event.freq = getNote(keyboard_ev->code);
+
+                        switch(keyboard_ev->value){
+                            case 0: event.type = NoteEvent::NOTE_OFF; break;
+                            case 1: event.type = NoteEvent::NOTE_ON; break;
+                        }
+
+                        mNoteEventQueue->append(event);
+                    }
+                    }
                 }
             }
 
