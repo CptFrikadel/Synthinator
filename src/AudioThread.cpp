@@ -91,8 +91,11 @@ void AudioThread::handleEvents()
 
     for (auto& event : events)
     {
+        if (event.freq == 0)
+            continue;
+
         // check what event it was
-        if (event.type == NoteEvent::NOTE_OFF && event.freq != 0)
+        if (event.type == NoteEvent::NOTE_OFF)
         {
             // NOTE_OFF so remove from vector of playing notes
             for (auto& it: playing)
@@ -104,7 +107,7 @@ void AudioThread::handleEvents()
                 }
             }
         } 
-        else if (event.type == NoteEvent::NOTE_ON && event.freq != 0) 
+        else if (event.type == NoteEvent::NOTE_ON) 
         {
             // NOTE_ON create new oscillator and add to playing notes
             playing.push_back(noteBuilder.Build(event.freq));
