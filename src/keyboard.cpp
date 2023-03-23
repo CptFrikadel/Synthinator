@@ -106,12 +106,14 @@ void Keyboard::keyboardLoop(){
                         event.type = UIEvent::QUIT;
 
                         mUIqueue->append(event);
+                        break;
                     }
                     default:
                     {
 
                         NoteEvent event;
 
+                        event.velocity = 1;
                         event.freq = getNote(keyboard_ev->code);
 
                         switch(keyboard_ev->value){
