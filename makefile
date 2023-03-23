@@ -5,6 +5,10 @@ EXE := synth
 
 CFLAGS := -std=c++20 -Wall -Wextra -g -O2
 
+ifeq ($(PROFILE),y)
+	CFLAGS += -pg
+endif
+
 SRC_DIR := src
 OBJ_DIR := bin
 
