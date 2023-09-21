@@ -12,6 +12,8 @@ void UIThread::Start()
     std::cerr << "Starting UIThread.." << std::endl;
     mThread = std::thread(&UIThread::HandleUI, this);
 
+    mCursesUI.Init();
+
     mThread.join();
 }
 
@@ -34,6 +36,7 @@ void UIThread::HandleUI()
         if (events.empty())
         {
             mEventQueue->DoneConsuming();
+            mCursesUI.Update();
             continue;
         }
 
@@ -43,9 +46,13 @@ void UIThread::HandleUI()
             if (event.type == UIEvent::QUIT)
             {
                 mActive = false;
+                mCursesUI.Exit();
             }
         }
 
         mEventQueue->DoneConsuming();
+        mCursesUI.Update();
     }
+
+    mCursesUI.Exit();
 }

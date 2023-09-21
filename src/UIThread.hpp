@@ -2,6 +2,7 @@
 
 #include "EventQueue.hpp"
 #include "EventTypes.hpp"
+#include "CursesUI.hpp"
 #include <atomic>
 #include <memory>
 #include <thread>
@@ -27,6 +28,8 @@ private:
     std::thread mThread;
     std::atomic<bool> mActive;
     std::shared_ptr<EventQueue<UIEvent>> mEventQueue;
+
+    CursesUI mCursesUI;
 
     void HandleUI();
 };
