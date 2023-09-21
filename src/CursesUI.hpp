@@ -10,11 +10,16 @@ public:
 
     CursesUI() = default;
 
-
+    /*
+     * Initialize the curese ui. Calls initscr()
+     */
     void Init();
 
     void Update();
     
+    /*
+     * End curses mode
+     */
     void Exit();
 
 
