@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
     InputThread input_thread(keyboard_device, event_queue, ui_queue);
     AudioThread audio_thread(event_queue);
 
-    UIThread uiThread(ui_queue);
+    UIThread uiThread(ui_queue, audio_thread);
 
     uiThread.Start();
 

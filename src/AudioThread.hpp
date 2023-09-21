@@ -5,6 +5,7 @@
 #include <atomic>
 #include <thread>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 #include "EventQueue.hpp"
@@ -19,6 +20,11 @@ public:
     ~AudioThread();
 
     void Stop(){ mActive = false; }
+
+    const NoteBuilder& GetNoteBuilder() const { return noteBuilder; }
+    void SetNoteBuilder(NoteBuilder _noteBuilder) { noteBuilder = std::move(_noteBuilder); }
+
+    unsigned int GetSampleFreq() const { return sample_freq; }
 
 private:
     const unsigned int sample_freq = 48000;

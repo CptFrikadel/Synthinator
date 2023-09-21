@@ -30,15 +30,9 @@ AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
     mActive = true;
     playback_loop = std::thread(&AudioThread::makeSound, this);
 
-    // TODO move test..
-    noteBuilder.setBaseEnvelope({1, 10, .9, 1500})
-        .addHarmonic( .125, -3, 3.14, WaveType::WAVE_SINE)
-        .addHarmonic( .124, -3, 3.14, WaveType::WAVE_SINE)
-        .addHarmonic( .25, 3, 3.14, WaveType::WAVE_SINE)
-        .addHarmonic( .25, 6, 3.14, WaveType::WAVE_SINE)
-        .addHarmonic( 1, 0, 0, WaveType::WAVE_SINE)
-        .addHarmonic( 2, -12, 0.5*3.14, WaveType::WAVE_SINE)
-        .addHarmonic( 4, -18, 0.25*3.14, WaveType::WAVE_SQUARE);
+    // Setup default note builder
+    noteBuilder.setBaseEnvelope({1, 1, 1, 10})
+        .addHarmonic( 1, 0, 0, WaveType::WAVE_SINE);
 }
 
 AudioThread::~AudioThread(){

@@ -19,7 +19,9 @@ struct UIEvent
 {
     enum Event_type
     {
-        QUIT
+        QUIT,
+        TOGGLE_MODE_1,
+        TOGGLE_MODE_2,
     };
 
     Event_type type;

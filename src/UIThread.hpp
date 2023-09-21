@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AudioThread.hpp"
 #include "EventQueue.hpp"
 #include "EventTypes.hpp"
 #include "CursesUI.hpp"
@@ -12,8 +13,9 @@ class UIThread
 {
 public:
 
-    UIThread(std::shared_ptr<EventQueue<UIEvent>> uiEventQueue)
+    UIThread(std::shared_ptr<EventQueue<UIEvent>> uiEventQueue, AudioThread& audioThread)
         : mEventQueue(uiEventQueue)
+        , mAudioThread(audioThread)
     {}
 
     /*
@@ -28,6 +30,7 @@ private:
     std::thread mThread;
     std::atomic<bool> mActive;
     std::shared_ptr<EventQueue<UIEvent>> mEventQueue;
+    AudioThread& mAudioThread;
 
     CursesUI mCursesUI;
 

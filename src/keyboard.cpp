@@ -102,15 +102,32 @@ void Keyboard::keyboardLoop(){
                             break;
 
                         UIEvent event;
-
                         event.type = UIEvent::QUIT;
+                        mUIqueue->append(event);
+                        break;
+                    }
+                    case KEY_1:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
 
+                        UIEvent event;
+                        event.type = UIEvent::TOGGLE_MODE_1;
+                        mUIqueue->append(event);
+                        break;
+                    }
+                    case KEY_2:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
+
+                        UIEvent event;
+                        event.type = UIEvent::TOGGLE_MODE_2;
                         mUIqueue->append(event);
                         break;
                     }
                     default:
                     {
-
                         NoteEvent event;
 
                         event.velocity = 1;
