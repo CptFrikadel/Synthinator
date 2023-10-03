@@ -64,17 +64,17 @@ void UIThread::HandleUI()
                     .addHarmonic( 2, -12, 0.5*3.14, WaveType::WAVE_SINE)
                     .addHarmonic( 4, -18, 0.25*3.14, WaveType::WAVE_SQUARE);
 
-                mAudioThread->SetNoteBuilder(noteBuilder);
+                mAudioThread.SetNoteBuilder(noteBuilder);
                 break;
             }
             case UIEvent::TOGGLE_MODE_2:
             {
-                NoteBuilder noteBuilder(mAudioThread->GetSampleFreq());
+                NoteBuilder noteBuilder(mAudioThread.GetSampleFreq());
 
                 noteBuilder.setBaseEnvelope({1, 10, .9, 500})
                     .addHarmonic( 1, 0, 0, WaveType::WAVE_SQUARE);
 
-                mAudioThread->SetNoteBuilder(noteBuilder);
+                mAudioThread.SetNoteBuilder(noteBuilder);
                 break;
             }
             }
