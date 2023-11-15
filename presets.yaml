@@ -1,0 +1,56 @@
+---
+preset0:
+  harmonics:
+    - {type: "Sine", freq: 1, volume: 0, phase: 0}
+    - {type: "Square", freq: 2, volume: -6, phase: 3.14}
+    - {type: "Sine", freq: 0.5, volume: -6, phase: 3.14}
+    - {type: "Sine", freq: 0.25, volume: -6, phase: 3.14}
+    - {type: "Sine", freq: 4, volume: -6, phase: 3.14}
+  envelope:
+    attack: 1
+    decay: 10
+    sustain: 0.9
+    release: 1000
+
+preset1:
+  harmonics:
+    - {type: "Square", freq: 1, volume: 0, phase: 0}
+    - {type: "Square", freq: 8, volume: -12, phase: 0}
+    - {type: "Sine", freq: 0.25, volume: -6, phase: 0}
+  envelope:
+    attack: 1
+    decay: 10
+    sustain: 0.9
+    release: 5000
+
+preset2:
+  harmonics:
+    - {type: "Sine", freq: 0.125, volume: 0, phase: 0}
+    - {type: "Sine", freq: 0.25, volume: 0, phase: 0}
+    - {type: "Sine", freq: 0.5, volume: -6, phase: 0}
+    - {type: "Square", freq: 1, volume: -12, phase: 0}
+    - {type: "Square", freq: 8, volume: -12, phase: 0}
+  envelope:
+    attack: 100
+    decay: 10
+    sustain: 0.9
+    release: 2000
+
+preset3:
+  harmonics:
+    - {type: "Square", freq: 1, volume: -12, phase: 0}
+  envelope:
+    attack: 100
+    decay: 10
+    sustain: 0.9
+    release: 2000
+
+preset4:
+  harmonics:
+    - {type: "Sine", freq: 1, volume: -12, phase: 0}
+  envelope:
+    attack: 100
+    decay: 10
+    sustain: 0.9
+    release: 2000
+
