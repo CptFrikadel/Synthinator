@@ -48,7 +48,7 @@ static WaveType stringToWaveType(const std::string& line)
    return WaveType::WAVE_SINE;
 }
 
-void PresetManager::ReadFromFile(std::filesystem::path filePath)
+void PresetFile::ReadFromFile(std::filesystem::path filePath)
 {
     std::ifstream file(filePath);
     

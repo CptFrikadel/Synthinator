@@ -7,21 +7,38 @@
 #include <vector>
 
 
-
-class PresetManager
+class PresetManagerBase
 {
 public:
-    PresetManager() = default;
-    virtual ~PresetManager() = default;
+    PresetManagerBase() = default;
+    virtual ~PresetManagerBase() = default;
 
-    void ReadFromFile(std::filesystem::path filePath);
+    virtual const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() = 0;
+};
 
-    const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() { return mNotePresets; }
 
+class PresetFile : public PresetManagerBase
+{
+public:
+    PresetFile() = default;
+    virtual ~PresetFile() = default;
+
+    virtual void ReadFromFile(std::filesystem::path filePath);
+
+    const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() override { return mNotePresets; }
 
 private:
     std::filesystem::path mFilename;
 
     std::vector<std::shared_ptr<NoteBuilder>> mNotePresets;
+};
 
+
+class YamlPresetFile : public PresetFile
+{
+public:
+    YamlPresetFile() = default;
+    virtual ~YamlPresetFile() = default;
+
+    virtual void ReadFromFile(std::filesystem::path filePath) override;
 };
