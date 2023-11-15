@@ -2,6 +2,7 @@
 
 #include <curses.h>
 #include <iostream>
+#include <string>
 
 void CursesUI::Init()
 {
@@ -33,10 +34,16 @@ void CursesUI::Update()
     int row, col;
     getmaxyx(stdscr, row, col);
 
-    const std::string mesg = "Yo Whaddup!";
+    std::string mesg = "Yo Whaddup!";
 
+    clear();
     attron(A_BOLD);
     mvprintw(row/2, (col - mesg.length())/2, "%s", mesg.c_str());
+    attroff(A_BOLD);
+
+    mesg = "Current mode: " + std::to_string(mMode);
+    attron(A_BOLD);
+    mvprintw(row-2, (col - mesg.length())/2, "%s", mesg.c_str());
     attroff(A_BOLD);
 
     refresh();

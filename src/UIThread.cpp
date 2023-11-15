@@ -59,38 +59,47 @@ void UIThread::HandleUI()
             {
                 auto presets = mPresetFile->GetNotePresets();
                 mAudioThread.SetNoteBuilder(presets[0]);
+                mCursesUI.NotifyMode(1);
                 break;
             }
             case UIEvent::TOGGLE_MODE_2:
             {
                 auto presets = mPresetFile->GetNotePresets();
 
-                if (presets.size() >= 2)
+                if (presets.size() >= 2){
                     mAudioThread.SetNoteBuilder(presets[1]);
+                    mCursesUI.NotifyMode(2);
+                }
                 break;
             }
             case UIEvent::TOGGLE_MODE_3:
             {
                 auto presets = mPresetFile->GetNotePresets();
 
-                if (presets.size() >= 3)
+                if (presets.size() >= 3){
                     mAudioThread.SetNoteBuilder(presets[2]);
+                    mCursesUI.NotifyMode(3);
+                }
                 break;
             }
             case UIEvent::TOGGLE_MODE_4:
             {
                 auto presets = mPresetFile->GetNotePresets();
 
-                if (presets.size() >= 4)
+                if (presets.size() >= 4){
                     mAudioThread.SetNoteBuilder(presets[3]);
+                    mCursesUI.NotifyMode(4);
+                }
                 break;
             }
             case UIEvent::TOGGLE_MODE_5:
             {
                 auto presets = mPresetFile->GetNotePresets();
 
-                if (presets.size() >= 5)
+                if (presets.size() >= 5){
                     mAudioThread.SetNoteBuilder(presets[4]);
+                    mCursesUI.NotifyMode(5);
+                }
                 break;
             }
             case UIEvent::RELOAD_PRESETS:
