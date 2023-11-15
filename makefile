@@ -16,7 +16,7 @@ SRC := $(wildcard $(SRC_DIR)/*.cpp)
 
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-LDFLAGS :=  -lasound -pthread -lncurses
+LDFLAGS :=  -lasound -pthread -lncurses -lyaml-cpp
 
 all: $(EXE)
 

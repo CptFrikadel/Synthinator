@@ -27,7 +27,7 @@ public:
 
     const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() override { return mNotePresets; }
 
-private:
+protected:
     std::filesystem::path mFilename;
 
     std::vector<std::shared_ptr<NoteBuilder>> mNotePresets;
