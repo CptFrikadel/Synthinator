@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <yaml-cpp/node/node.h>
 
 
 class PresetManagerBase
@@ -41,4 +42,7 @@ public:
     virtual ~YamlPresetFile() = default;
 
     virtual void ReadFromFile(std::filesystem::path filePath) override;
+
+private:
+    void ParsePreset(YAML::Node preset_node);
 };

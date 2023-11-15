@@ -9,19 +9,9 @@
 #include <yaml-cpp/node/parse.h>
 #include <yaml-cpp/yaml.h>
 
-void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
+void YamlPresetFile::ParsePreset(YAML::Node preset_node)
 {
-    YAML::Node presets = YAML::LoadFile(filePath.string());
-
-    if (!presets["preset"]){
-        std::cerr << "Invalid preset file! Could not find root preset node" << std::endl;
-        return;
-    }
-
-    mNotePresets.clear();
     NoteBuilder builder(48000);
-
-    YAML::Node preset_node = presets["preset"];
 
     if (!preset_node["harmonics"]){
         std::cerr << "Invalid preset, no harmonics defined!" << std::endl;
@@ -80,4 +70,32 @@ void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
 
     builder.setBaseEnvelope({attack, decay, sustain, release});
     mNotePresets.push_back(builder);
+}
+
+void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
+{
+    YAML::Node presets = YAML::LoadFile(filePath.string());
+
+    if (!presets["preset0"]){
+        std::cerr << "Invalid preset file! Could not find root preset node" << std::endl;
+        return;
+    }
+
+    mNotePresets.clear();
+
+    // Up to four presets
+    const std::vector<std::string> preset_nodes = {
+        "preset0", 
+        "preset1", 
+        "preset2", 
+        "preset3", 
+        "preset4"};
+
+    for (auto& preset_name : preset_nodes){
+        YAML::Node preset_node = presets[preset_name];
+
+        if (preset_node)
+            ParsePreset(preset_node);
+    }
+
 }

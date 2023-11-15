@@ -63,12 +63,34 @@ void UIThread::HandleUI()
             }
             case UIEvent::TOGGLE_MODE_2:
             {
-                NoteBuilder noteBuilder(mAudioThread.GetSampleFreq());
+                auto presets = mPresetFile->GetNotePresets();
 
-                noteBuilder.setBaseEnvelope({1, 10, .9, 500})
-                    .addHarmonic( 1, 0, 0, WaveType::WAVE_SQUARE);
+                if (presets.size() >= 2)
+                    mAudioThread.SetNoteBuilder(presets[1]);
+                break;
+            }
+            case UIEvent::TOGGLE_MODE_3:
+            {
+                auto presets = mPresetFile->GetNotePresets();
 
-                mAudioThread.SetNoteBuilder(noteBuilder);
+                if (presets.size() >= 3)
+                    mAudioThread.SetNoteBuilder(presets[2]);
+                break;
+            }
+            case UIEvent::TOGGLE_MODE_4:
+            {
+                auto presets = mPresetFile->GetNotePresets();
+
+                if (presets.size() >= 4)
+                    mAudioThread.SetNoteBuilder(presets[3]);
+                break;
+            }
+            case UIEvent::TOGGLE_MODE_5:
+            {
+                auto presets = mPresetFile->GetNotePresets();
+
+                if (presets.size() >= 5)
+                    mAudioThread.SetNoteBuilder(presets[4]);
                 break;
             }
             case UIEvent::RELOAD_PRESETS:
@@ -79,6 +101,7 @@ void UIThread::HandleUI()
             case UIEvent::MUTE:
             {
                 mAudioThread.ToggleMute();
+                break;
             }
             }
 

@@ -94,6 +94,7 @@ void Keyboard::keyboardLoop(){
 
                     keyboard_st->keys[keyboard_ev->code] = keyboard_ev->value;
 
+                    // TODO: probably create a key mapping somewhere..
                     switch(keyboard_ev->code)
                     {
                     case KEY_Q:
@@ -143,6 +144,36 @@ void Keyboard::keyboardLoop(){
 
                         UIEvent event;
                         event.type = UIEvent::TOGGLE_MODE_2;
+                        mUIqueue->append(event);
+                        break;
+                    }
+                    case KEY_3:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
+
+                        UIEvent event;
+                        event.type = UIEvent::TOGGLE_MODE_3;
+                        mUIqueue->append(event);
+                        break;
+                    }
+                    case KEY_4:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
+
+                        UIEvent event;
+                        event.type = UIEvent::TOGGLE_MODE_4;
+                        mUIqueue->append(event);
+                        break;
+                    }
+                    case KEY_5:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
+
+                        UIEvent event;
+                        event.type = UIEvent::TOGGLE_MODE_5;
                         mUIqueue->append(event);
                         break;
                     }

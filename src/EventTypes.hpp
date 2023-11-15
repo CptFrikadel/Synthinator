@@ -22,6 +22,9 @@ struct UIEvent
         QUIT,
         TOGGLE_MODE_1,
         TOGGLE_MODE_2,
+        TOGGLE_MODE_3,
+        TOGGLE_MODE_4,
+        TOGGLE_MODE_5,
         RELOAD_PRESETS,
         MUTE,
     };
