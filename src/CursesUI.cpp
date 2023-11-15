@@ -36,7 +36,6 @@ void CursesUI::Update()
 
     std::string mesg = "Yo Whaddup!";
 
-    clear();
     attron(A_BOLD);
     mvprintw(row/2, (col - mesg.length())/2, "%s", mesg.c_str());
     attroff(A_BOLD);

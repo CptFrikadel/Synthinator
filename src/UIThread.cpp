@@ -109,6 +109,7 @@ void UIThread::HandleUI()
             }
             case UIEvent::MUTE:
             {
+                mCursesUI.NotifyMode(0);
                 mAudioThread.ToggleMute();
                 break;
             }
