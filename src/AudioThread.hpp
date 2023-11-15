@@ -21,6 +21,10 @@ public:
 
     void Stop(){ mActive = false; }
 
+    void Mute(){ mMuted = true; }
+    void UnMute(){ mMuted = false; }
+    void ToggleMute(){ mMuted = !mMuted; }
+
     const NoteBuilder& GetNoteBuilder() const { return noteBuilder; }
     void SetNoteBuilder(NoteBuilder _noteBuilder) { noteBuilder = std::move(_noteBuilder); }
 
@@ -31,6 +35,7 @@ private:
     std::thread playback_loop;
 
     std::atomic<bool> mActive;
+    std::atomic<bool> mMuted;
 
     snd_pcm_t *pcm_handle;
 

@@ -72,7 +72,14 @@ void UIThread::HandleUI()
                 break;
             }
             case UIEvent::RELOAD_PRESETS:
+            {
                 mPresetFile->ReadFromFile("presets.yaml");
+                break;
+            }
+            case UIEvent::MUTE:
+            {
+                mAudioThread.ToggleMute();
+            }
             }
 
         }

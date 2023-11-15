@@ -28,6 +28,7 @@ AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
     }
 
     mActive = true;
+    mMuted = false;
     playback_loop = std::thread(&AudioThread::makeSound, this);
 
     // Setup default note builder
@@ -127,7 +128,7 @@ int AudioThread::onPlayback(){
     // Reset buffer
     buffer *= 0;
 
-    if (!playing.empty()){
+    if (!playing.empty() && !mMuted){
 
 
         // Erase inactive notes from playing vector before synthesizing

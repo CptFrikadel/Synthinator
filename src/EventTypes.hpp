@@ -23,6 +23,7 @@ struct UIEvent
         TOGGLE_MODE_1,
         TOGGLE_MODE_2,
         RELOAD_PRESETS,
+        MUTE,
     };
 
     Event_type type;
