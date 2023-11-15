@@ -139,13 +139,9 @@ int AudioThread::onPlayback(){
             }
         }
 
-        std::cerr << "\r\e[K" << std::flush;
 
-		// oscillate all running oscillators
+        // oscillate all running oscillators
         for (auto& note : playing){
-
-            // Print currently playing freqs
-            std::cerr << note.getAnalogFreq() << "\t";
 
             buffer += (note.synthesize() * 0.15);
         }
