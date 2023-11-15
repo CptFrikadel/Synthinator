@@ -38,13 +38,6 @@ void YamlPresetFile::ParsePreset(YAML::Node preset_node)
             return;
         }
 
-        std::cout << "Harmonic: " << std::endl 
-            << "    type: " << type 
-            << "    freq: " << freq 
-            << "    volume: " << volume 
-            << "    phase: " << phase 
-            << std::endl;
-        
         builder.addHarmonic(freq, volume, phase, wavetype);
     }
 
@@ -60,13 +53,6 @@ void YamlPresetFile::ParsePreset(YAML::Node preset_node)
     auto decay = envelope["decay"].as<float>();
     auto sustain = envelope["sustain"].as<float>();
     auto release = envelope["release"].as<float>();
-
-    std::cout << "Envelope: " << std::endl 
-        << "    attack: " << attack 
-        << "    decay: " << decay 
-        << "    sustain: " << sustain 
-        << "    release: " << release 
-        << std::endl;
 
     builder.setBaseEnvelope({attack, decay, sustain, release});
     mNotePresets.push_back(builder);
