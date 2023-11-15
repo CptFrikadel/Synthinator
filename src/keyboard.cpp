@@ -106,6 +106,16 @@ void Keyboard::keyboardLoop(){
                         mUIqueue->append(event);
                         break;
                     }
+                    case KEY_R:
+                    {
+                        if (keyboard_ev->value == 1)
+                            break;
+
+                        UIEvent event;
+                        event.type = UIEvent::RELOAD_PRESETS;
+                        mUIqueue->append(event);
+                        break;
+                    }
                     case KEY_1:
                     {
                         if (keyboard_ev->value == 1)
