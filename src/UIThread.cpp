@@ -1,13 +1,17 @@
 #include "UIThread.hpp"
 #include "EventTypes.hpp"
 #include "NoteBuilder.hpp"
+#include "PresetManager.hpp"
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <thread>
 
 
 void UIThread::Start()
 {
+    mPresetFile = std::make_shared<YamlPresetFile>();
+    mPresetFile->ReadFromFile("presets.yaml");
     mActive = true;
     
     std::cerr << "Starting UIThread.." << std::endl;
@@ -53,18 +57,8 @@ void UIThread::HandleUI()
             }
             case UIEvent::TOGGLE_MODE_1:
             {
-                NoteBuilder noteBuilder(48000);
-
-                noteBuilder.setBaseEnvelope({1, 10, .9, 1500})
-                    .addHarmonic( .125, -3, 3.14, WaveType::WAVE_SINE)
-                    .addHarmonic( .124, -3, 3.14, WaveType::WAVE_SINE)
-                    .addHarmonic( .25, 3, 3.14, WaveType::WAVE_SINE)
-                    .addHarmonic( .25, 6, 3.14, WaveType::WAVE_SINE)
-                    .addHarmonic( 1, 0, 0, WaveType::WAVE_SINE)
-                    .addHarmonic( 2, -12, 0.5*3.14, WaveType::WAVE_SINE)
-                    .addHarmonic( 4, -18, 0.25*3.14, WaveType::WAVE_SQUARE);
-
-                mAudioThread.SetNoteBuilder(noteBuilder);
+                auto presets = mPresetFile->GetNotePresets();
+                mAudioThread.SetNoteBuilder(presets[0]);
                 break;
             }
             case UIEvent::TOGGLE_MODE_2:
@@ -77,6 +71,8 @@ void UIThread::HandleUI()
                 mAudioThread.SetNoteBuilder(noteBuilder);
                 break;
             }
+            case UIEvent::RELOAD_PRESETS:
+                mPresetFile->ReadFromFile("presets.yaml");
             }
 
         }

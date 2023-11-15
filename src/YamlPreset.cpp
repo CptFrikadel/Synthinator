@@ -19,7 +19,7 @@ void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
     }
 
     mNotePresets.clear();
-    auto builder = std::make_shared<NoteBuilder>(48000);
+    NoteBuilder builder(48000);
 
     YAML::Node preset_node = presets["preset"];
 
@@ -55,7 +55,7 @@ void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
             << "    phase: " << phase 
             << std::endl;
         
-        builder->addHarmonic(freq, volume, phase, wavetype);
+        builder.addHarmonic(freq, volume, phase, wavetype);
     }
 
 
@@ -71,13 +71,13 @@ void YamlPresetFile::ReadFromFile(std::filesystem::path filePath)
     auto sustain = envelope["sustain"].as<float>();
     auto release = envelope["release"].as<float>();
 
-    std::cout << "Envelop: " << std::endl 
+    std::cout << "Envelope: " << std::endl 
         << "    attack: " << attack 
         << "    decay: " << decay 
         << "    sustain: " << sustain 
         << "    release: " << release 
         << std::endl;
 
-    builder->setBaseEnvelope({attack, decay, sustain, release});
+    builder.setBaseEnvelope({attack, decay, sustain, release});
     mNotePresets.push_back(builder);
 }

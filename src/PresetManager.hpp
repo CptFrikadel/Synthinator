@@ -13,7 +13,7 @@ public:
     PresetManagerBase() = default;
     virtual ~PresetManagerBase() = default;
 
-    virtual const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() = 0;
+    virtual std::vector<NoteBuilder> GetNotePresets() = 0;
 };
 
 
@@ -23,14 +23,14 @@ public:
     PresetFile() = default;
     virtual ~PresetFile() = default;
 
-    virtual void ReadFromFile(std::filesystem::path filePath);
+    virtual void ReadFromFile(std::filesystem::path filePath) = 0;
 
-    const std::vector<std::shared_ptr<NoteBuilder>>& GetNotePresets() override { return mNotePresets; }
+    std::vector<NoteBuilder> GetNotePresets() override { return mNotePresets; }
 
 protected:
     std::filesystem::path mFilename;
 
-    std::vector<std::shared_ptr<NoteBuilder>> mNotePresets;
+    std::vector<NoteBuilder> mNotePresets;
 };
 
 

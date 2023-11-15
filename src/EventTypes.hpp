@@ -22,6 +22,7 @@ struct UIEvent
         QUIT,
         TOGGLE_MODE_1,
         TOGGLE_MODE_2,
+        RELOAD_PRESETS,
     };
 
     Event_type type;

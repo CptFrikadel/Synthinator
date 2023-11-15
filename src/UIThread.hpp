@@ -4,6 +4,7 @@
 #include "EventQueue.hpp"
 #include "EventTypes.hpp"
 #include "CursesUI.hpp"
+#include "PresetManager.hpp"
 #include <atomic>
 #include <memory>
 #include <thread>
@@ -33,6 +34,8 @@ private:
     AudioThread& mAudioThread;
 
     CursesUI mCursesUI;
+
+    std::shared_ptr<YamlPresetFile> mPresetFile;
 
     void HandleUI();
 };
