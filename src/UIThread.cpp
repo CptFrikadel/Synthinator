@@ -53,8 +53,8 @@ void UIThread::HandleUI()
             switch (event.type){
             case UIEvent::QUIT:
             {
-                mActive = false;
-                mCursesUI.Exit();
+                //mActive = false;
+                //mCursesUI.Exit();
                 break;
             }
             case UIEvent::TOGGLE_MODE_1:
