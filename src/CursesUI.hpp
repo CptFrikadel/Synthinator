@@ -23,11 +23,12 @@ public:
     void Exit();
 
     void NotifyMode(unsigned mode_number){ mMode = mode_number; }
+    
+    void NotifyLoad(float load){ mSynthLoad = load; }
 
 private:
 
     unsigned mMode = 0;
-    // Some reference to the NoteBuilder
-    // Some reference to the AudioThread
+    float mSynthLoad = 0;
 
 };

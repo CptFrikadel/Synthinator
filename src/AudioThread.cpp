@@ -1,7 +1,12 @@
 #include "AudioThread.hpp"
 #include "EventTypes.hpp"
+#include "FrameBuffer.hpp"
 #include "NoteBuilder.hpp"
+#include <bits/chrono.h>
+#include <chrono>
+#include <numeric>
 
+using namespace std::chrono_literals;
 
 AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
     : event_queue(eventQueue)
@@ -29,6 +34,8 @@ AudioThread::AudioThread(std::shared_ptr<EventQueue<NoteEvent>> eventQueue)
 
     mActive = true;
     mMuted = false;
+    mInstantaneousLoads.resize(LoadAverageWindowSize);
+    std::fill(mInstantaneousLoads.begin(), mInstantaneousLoads.end(), 0.0f);
     playback_loop = std::thread(&AudioThread::makeSound, this);
 
     // Setup default note builder
@@ -123,6 +130,8 @@ void AudioThread::handleEvents()
 
 int AudioThread::onPlayback(){
 
+    const auto playbackStart = std::chrono::system_clock::now();
+
     handleEvents();
 
     // Reset buffer
@@ -147,6 +156,17 @@ int AudioThread::onPlayback(){
         }
     }
 
+    int result = snd_pcm_writei(pcm_handle, buffer.get(), FrameBuffer::frame_size);
 
-    return snd_pcm_writei(pcm_handle, buffer.get(), FrameBuffer::frame_size);
+    const auto playbackEnd = std::chrono::system_clock::now();
+    float currentLoad = static_cast<float>((playbackEnd - playbackStart)/1us);
+    mInstantaneousLoads[mLoadsIndex] = currentLoad / ((float)FrameBuffer::frame_size /(float)sample_freq * 1000000);
+
+    // New index with wraparound
+    mLoadsIndex = (mLoadsIndex + 1) % (LoadAverageWindowSize);
+
+    // Calculate the average
+    mLoadAverage = std::reduce(mInstantaneousLoads.begin(), mInstantaneousLoads.end()) / static_cast<float>(LoadAverageWindowSize);
+
+    return result;
 }

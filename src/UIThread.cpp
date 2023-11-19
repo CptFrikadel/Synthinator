@@ -36,6 +36,8 @@ void UIThread::HandleUI()
         // Bodge 50Hz refresh rate
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
+        mCursesUI.NotifyLoad(mAudioThread.GetCurrentLoad());
+
         auto& events = mEventQueue->StartConsuming();
 
         if (events.empty())

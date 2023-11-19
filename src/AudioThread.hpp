@@ -3,10 +3,12 @@
 
 #include <alsa/asoundlib.h>
 #include <atomic>
+#include <cstddef>
 #include <thread>
 #include <iostream>
 #include <utility>
 #include <vector>
+#include <numeric>
 
 #include "EventQueue.hpp"
 #include "EventTypes.hpp"
@@ -30,8 +32,11 @@ public:
 
     unsigned int GetSampleFreq() const { return sample_freq; }
 
+    float GetCurrentLoad() const { return mLoadAverage; }
+
 private:
-    const unsigned int sample_freq = 48000;
+    static const unsigned int sample_freq = 48000;
+    static const std::size_t LoadAverageWindowSize = 300;
     std::thread playback_loop;
 
     std::atomic<bool> mActive;
@@ -46,6 +51,10 @@ private:
     FrameBuffer buffer;
     std::vector<Note> playing;
     std::shared_ptr<EventQueue<NoteEvent>> event_queue;
+
+    std::atomic<float> mLoadAverage = 0.0f;
+    std::vector<float> mInstantaneousLoads;
+    std::size_t mLoadsIndex = 0;
 
     NoteBuilder noteBuilder;
 };

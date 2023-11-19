@@ -1,5 +1,7 @@
 #include "CursesUI.hpp"
 
+
+#include <format>
 #include <curses.h>
 #include <iostream>
 #include <string>
@@ -42,6 +44,9 @@ void CursesUI::Update()
     attron(A_BOLD);
     mvprintw(row-2, (col - mesg.length())/2, "%s", mesg.c_str());
     attroff(A_BOLD);
+
+    mesg = "Synthesizer DSP load: " + std::format("{:.1f}", mSynthLoad * 100) + "%";
+    mvprintw(row/2 + 4, (col - mesg.length())/2, "%s", mesg.c_str());
 
     refresh();
 }
