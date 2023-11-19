@@ -6,8 +6,6 @@
 
 void CursesUI::Init()
 {
-    std::cout << "Gonna init them scr yo!" << std::endl;
-    
     initscr();
 
     // Enable line buffering.
@@ -51,5 +49,8 @@ void CursesUI::Update()
 
 void CursesUI::Exit()
 {
+    curs_set(1);
+    flushinp();
     endwin();
+    refresh();
 }
