@@ -36,7 +36,7 @@ public:
 
 private:
     static const unsigned int sample_freq = 48000;
-    static const std::size_t LoadAverageWindowSize = 300;
+    static const std::size_t LoadAverageWindowSize = 100;
     std::thread playback_loop;
 
     std::atomic<bool> mActive;

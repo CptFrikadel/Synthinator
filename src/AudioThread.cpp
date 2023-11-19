@@ -131,7 +131,6 @@ void AudioThread::handleEvents()
 int AudioThread::onPlayback(){
 
     const auto playbackStart = std::chrono::system_clock::now();
-
     handleEvents();
 
     // Reset buffer
@@ -156,9 +155,9 @@ int AudioThread::onPlayback(){
         }
     }
 
+    const auto playbackEnd = std::chrono::system_clock::now();
     int result = snd_pcm_writei(pcm_handle, buffer.get(), FrameBuffer::frame_size);
 
-    const auto playbackEnd = std::chrono::system_clock::now();
     float currentLoad = static_cast<float>((playbackEnd - playbackStart)/1us);
     mInstantaneousLoads[mLoadsIndex] = currentLoad / ((float)FrameBuffer::frame_size /(float)sample_freq * 1000000);
 
